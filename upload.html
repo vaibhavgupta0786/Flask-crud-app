@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">  
+    <title>File MetaData Display</title>
+
+</head>
+
+<body>
+<h1>
+    upload file here
+
+</h1>
+<form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+<strong>Files:</strong><br>
+<!-- need to specify mime types as well eg :- mp4 , x-m4v just video/* wont work for safari ( works well in all other browesers though !! ) -->
+<input id="file-picker" type="file" name="file" accept="audio/*,video/*,video/mp4,video/x-m4v" multiple>
+<div id="message"> </div >
+<input type= "submit"  value="Upload!" id="iploadbutton">
+    
+</form>
+</body>
+
+<script>
+    $("#file-picker").change(
+        function(){
+            var input = document.getElementById('file-picker')
+            for (var i=0; i<input.files.length; i++)
+        {
+        //koala.jpg, koala.JPG substring(index) lastIndexOf('a') koala.1.jpg
+            var ext= input.files[i].name.substring(input.files[i].name.lastIndexOf('.')+1).toLowerCase()
+            if (len(input.files[i].name) == "" ){
+                $("message").text("files are not named properly")
+                document.getElementById("file-picker").value ="";
+
+            }
+            else if ((ext == 'flac') || (ext == 'wav') || (ext == "mp4") || (ext == "avi") || (ext == "mp3")   )
+            {
+                $("#message").text("Files are supported")
+            }
+            else
+            {
+                $("#message").text("Files are NOT supported")
+                document.getElementById("file-picker").value ="";
+            }
+
+        }
+        }
+    )
+</script>
+
+</html>
